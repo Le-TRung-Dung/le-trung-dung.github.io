@@ -1,0 +1,179 @@
+.grid{
+	width: 1125px;
+	max-width: 100%;
+	margin: 0 auto;
+}
+
+.header-chonie{
+	width: 100%;
+	height: 100px;
+	background-color: orange;
+	display: flex;
+	position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+}
+
+.to-nav-header-chonie{
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.logo-header-chonie a img{
+	width: auto;
+	height: 100px;
+	margin-left: -10px;
+}
+
+.nav-header-chonie{
+	display: flex;
+	align-items: center;
+}
+
+.nav-header-chonie >a {
+	text-decoration: none;
+	color: white;
+}
+
+.timkiem-header-chonie{
+	display: flex;
+	align-items: center;
+	position: relative;
+	margin: 20px;
+}
+
+.inputSearch button{
+	background-color:#74c0fc;
+	height: 30.5px;
+	font-size: 20px;
+	border: 0;
+}
+.phantu-header-chonie a{
+	color: white;
+	text-decoration: none;
+}
+.phantu-header-chonie {
+	font-size: 16px;
+	flex: 1;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.sanpham-tonghop-header >li > a{
+
+	color: #555 ;
+}
+.phantu-header-chonie a{
+	margin: 20px;
+}
+.phantu-header-chonie:hover > a{
+	color: red;
+}
+.sanpham-tonghop-header{
+	position: absolute;
+	min-width: 190px;
+	box-shadow: 0 0 10px rgb(0 0 0 / 5%);
+	background-color: white;
+	border-radius: 3px;
+	top: 70%;
+	left: 0;
+	list-style: none;
+	padding: 0;
+	min-height: 125px;
+	display: none;
+	transform-origin: top left;
+    animation: sanpham-tonghop-header-to ease-in 0.25s;
+}
+@keyframes sanpham-tonghop-header-to{
+	from {
+		opacity: 0;
+		transform: scale(0);
+	}
+	to{
+		opacity: 1;
+		transform: scale(1.0);
+	}
+}
+.phantu-header-chonie:hover .sanpham-tonghop-header{
+	display: block;
+}
+
+.sanpham-tonghop-header-tem{
+	margin-top: 10px;
+}
+.sanpham-tonghop-header-tem:hover a{
+	color: orange;
+}
+.giohang-header-chonie{
+	display: flex;
+	align-items: center;
+	margin: 20px;
+}
+
+.giohang-header-chonie-item svg{
+	font-size: 19px;
+	margin-top: 3px;
+	margin-right: 2px;
+	color: #74c0fc;
+}
+
+.giohang-header-chonie-item{
+	background-color: white;
+	height: 36px;
+	width: 36px;
+    display: flex;
+    align-items: center;
+    border-radius: 50%;
+    justify-content: center;
+}
+
+.user svg{
+	font-size: 24px;
+    margin-top: 4px;
+    margin-left: 2.5px;
+}
+
+.taikhoan-header-chonie{
+	margin: 20px;
+}
+.ant-input-affix-wrapper .css-dev-only-do-not-override-1me4733 {
+	width: 190px;
+}
+.myinput{
+	height: 4px;
+    width: 143px;
+    border: 0;
+    outline: none;
+    box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 9%);
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 14px;
+}
+.searchbutton{
+	height: 30px;
+    width: 36px;
+    background-color: white;
+    border: 0;
+    border-radius: 16px;
+    font-size: 22px;
+    position: absolute;
+    right: 0;
+    margin-right: 5px;
+	margin-top: 8px;
+}
+.giohang-header-chonie-item button{
+	border: none;
+    font-size: 14px;
+    background-color: white;
+    height: 37px;
+}
+
+.cart-mount{
+	color: black;
+	margin-left: 5px;
+	font-size: 16px;
+}

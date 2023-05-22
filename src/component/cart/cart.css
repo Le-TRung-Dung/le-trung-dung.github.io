@@ -1,0 +1,137 @@
+*{
+    box-sizing: border-box;
+}
+#root{
+    background-color: #f8f2e8;
+}
+.cart{
+    border-bottom: 1px solid #ccc;
+    text-transform: uppercase !important;
+    /* font-family: "UTMAvoBold" !important; */
+    font-weight: 700;
+    color: #333333;
+    padding: 0px 0px 15px 0px;
+    margin: 0px 0px 15px 0px;
+}
+
+inner{
+    margin-top: 20px;
+    border-top: 1px solid #ccc;
+}
+.Cart_empty {
+    display: flex;
+    justify-content: center;
+}
+.cart_empty_item{
+    font-size: 26px;
+    text-transform: uppercase !important;
+    margin-top: 30px;
+}
+.tr_thead{
+    color: #333333;
+}
+.th_info_product{
+    padding: 30px 15px;
+    font-size: 16px;
+    font-weight: 300;
+    border-bottom: 1px solid #ccc;
+    text-transform: uppercase !important;
+    width: 186px;
+}
+.table_cart{
+    width: 100%;
+}
+.tr_cart{
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+.td_img_product img{
+    width: 215px;
+    margin-left: 20px;
+}
+.td_name_prodct a{
+    text-decoration: none;
+    color: #733131;
+    font-weight: 300;
+    font-size: 22px;
+    padding-right: 30px;
+    line-height: 30px;
+}
+.td_name_prodct{
+    flex: 2;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    margin-left: 30px;
+    align-items: baseline;
+}
+.td_name_prodct small{
+    font-size: 16px;
+}
+.td_name_prodct button{
+    font-size: 14px;
+    width: 60px;
+}
+.td_price{
+    text-align: center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -80px;
+}
+.td_price span{
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+    
+}
+.td_amount{
+    text-align: center;
+    flex: 1;
+    margin-top: 90px;
+}
+.total_price {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.td_total span{
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+}
+.td_total{
+    text-align: center;
+    flex: 1;
+    margin-top: 100px;
+}
+.Total{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.total_order{
+    font-size: 14px;
+    text-transform: uppercase !important;
+}
+.total_price_end{
+    font-size: 26px;
+    font-weight: 600;
+}
+.total_price_end span{
+    font-size: 16px;
+    font-weight: 100;
+}
+.pay{
+    text-align: center;
+    margin-top: 20px;
+}
+.continueShopping{
+    text-align: center;
+    margin-top: 20px;
+}

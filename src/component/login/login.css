@@ -1,0 +1,100 @@
+
+
+.bannerlogin{
+	height: 250px;
+    padding: 50px 0;
+    background: url(file:///C:/Users/Administrator/Desktop/ti%E1%BB%87m%20b%C3%A1nh%20c%E1%BB%A7a%20chon/bannerlogin.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    margin-top: 100px;
+}
+.bannertext h2{
+	font-size: 32px;
+    color: #fff;
+    padding: 0px;
+    margin: 0px 0px 15px 0px;
+    text-transform: uppercase;
+}
+.banneroverlay{
+	position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ant-form-item-control-input-content input {
+    height: 40px;
+    width: 300px;
+    border-radius: 4px;
+    border: oldlace;
+    color: #787878;
+    font-size: 16px;
+}
+.ant-form-item-control-input-content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ant-form-item-control-input-content span input{
+    height: 40px;
+    width: 300px;
+    border-radius: 4px;
+    border: oldlace;
+    color: #787878;
+    font-size: 16px;
+}
+.ant-form-item-control-input-content :where(.css-dev-only-do-not-override-diro6f).ant-input-affix-wrapper{
+    width: 300px;
+    height: 40px;
+    width: 300px;
+    border-radius: 4px;
+    border: oldlace;
+    color: #787878;
+    font-size: 16px;
+}
+:where(.css-dev-only-do-not-override-1me4733).ant-input-affix-wrapper{
+    width: 300px;
+    border-radius: 4px;
+    border: oldlace;
+    color: #787878;
+    font-size: 16px;
+}
+.ant-form .ant-form-horizontal .css-dev-only-do-not-override-diro6f{
+    margin-top: 40px;
+}
+.fomlogin{
+    margin-top: 40px;
+}
+.ant-form-item-control-input-content button{
+    height: 40px;
+    width: 300px;
+    border-radius: 4px;
+    border: oldlace;
+    color: white;
+    font-size: 16px;
+    background-color: orange;
+}
+.ant-form-item-explain-error{
+    text-align: center;
+    margin-left: -146px;
+    margin-bottom: 10px;
+}
+.login-text{
+    text-align: center;
+    margin-top: 17px;
+}
+.login-text p a{
+	text-decoration: none;
+	font-size: 16px;
+	color: #3d1a1a;
+}
+
