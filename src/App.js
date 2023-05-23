@@ -15,7 +15,7 @@ import ProductDetail from './component/detailProduct/detailproduct';
 import Cartitem from './component/cart/cart';
 import Pay from './component/pay/pay';
 import SugarCake from './component/typeCake/sugarCake/banhngot';
-
+import './i18next'
 
 
 function App() {

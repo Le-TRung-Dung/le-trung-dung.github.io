@@ -12,9 +12,11 @@ import { useSelector, useDispatch } from 'react-redux'
 import { selectCount } from '../../redux/counterproductslice';
 import { searchProducts } from '../../redux/productSlice';
 import Container from '../container/container';
+import { useTranslation ,  withTranslation } from 'react-i18next';
 
 
-function Header({ onSearch }) {
+function Header() {
+  const { t, i18n } = useTranslation();
   const isLoggin = useSelector((state)=>state.accounSlice.isLoggin);
   const count = useSelector(selectCount);
   const products = useSelector((state)=>state.productSlice.product);
@@ -55,10 +57,10 @@ function Header({ onSearch }) {
           </div>
           <div className="nav-header-chonie">
             <div className="phantu-header-chonie">
-              <Link to="/"> Trang chủ</Link>
+              <Link to="/"> {t('Home page')}</Link>
             </div>
             <div className="phantu-header-chonie">
-              <Link to="/sanpham">Sản phẩm</Link>
+              <Link to="/sanpham">{t('Product')}</Link>
               <ul className="sanpham-tonghop-header">
                 <li className="sanpham-tonghop-header-tem">
                   <Link to="/sugarcake">Bánh ngọt</Link>
@@ -120,4 +122,4 @@ function Header({ onSearch }) {
   );
 }
 
-export default Header;
+export default withTranslation()(Header);
