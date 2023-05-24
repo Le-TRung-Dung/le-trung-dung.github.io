@@ -10,10 +10,10 @@ import {
   increment,
   selectCount,
 } from '../../redux/counterproductslice';
-
-
+import { useTranslation ,  withTranslation } from 'react-i18next';
 
 const Cartitem = () => {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -54,21 +54,21 @@ const Cartitem = () => {
     <div className="bannerlogin">
      		<div className="banneroverlay">
      			<div className="bannertext">
-     				<h2>Giỏ hàng của bạn</h2>
+     				<h2>{t("Your cart")}</h2>
      			</div>
      		</div>
     </div>
     <div className="grid"> 
       <div className='cart'> 
-            <h1>Giỏ Hàng</h1>
+            <h1>{t("Cart")}</h1>
       </div>
         <table className='table_cart'>
           <thead className='thead'>
             <tr className='tr_thead'>
-              <th colSpan={3} className='th_info_product'>thông tin sản phẩm</th>
-              <th className='th_info_product'>đơn giá</th>
-              <th className='th_info_product'>số lượng</th>
-              <th className='th_info_product'>tổng giá</th>
+              <th colSpan={3} className='th_info_product'>{t("Product information")}</th>
+              <th className='th_info_product'>{t("Unit price")}</th>
+              <th className='th_info_product'>{t("Quantity")}</th>
+              <th className='th_info_product'>{t("Total money")}</th>
             </tr>
           </thead>
         </table>
@@ -76,7 +76,7 @@ const Cartitem = () => {
     {myCart.length === 0 ? (
       <div className='Cart_empty'>
         <div className='cart_empty_item'>
-        Giỏ hàng trống
+           {t("Cart is empty")}
         </div>
       </div>):(
     <div>
@@ -103,7 +103,10 @@ const Cartitem = () => {
                                 <br />
                                 <small>{item.size}</small>
                                 <br/>
-                                <Button onClick={()=>handleRemove(item)}>Xóa</Button>
+                                <Button 
+                                  style={{width:"70px"}}
+                                  onClick={()=>handleRemove(item)}
+                                  >{t("Delete")}</Button>
                             </td>
                             <td className='td_price'>
                               <span>{item.price.toLocaleString()}</span>
@@ -146,17 +149,17 @@ const Cartitem = () => {
         )}
     <div className='Total'>
       <div>
-       <span className='total_order'>Tổng đơn hàng :</span> 
+       <span className='total_order'>{t("Total order")} :</span> 
       <span className='total_price_end'> {cartTotal.toLocaleString()}<span>đ</span></span> 
       </div>
     </div>
    {cartTotal > 0 ? (
     <div className='pay'>
       <Button 
-      style={{backgroundColor:'orange' , fontSize:"16px" ,fontWeight:"500" , color:"white"}}
+      style={{backgroundColor:'orange' , fontSize:"16px" ,fontWeight:"500" , color:"white" , width:"160px"}}
       size="large "
       onClick={pay}>
-        Thanh toán
+        {t("Pay")}
       </Button>
     </div> ):
     (<div className='continueShopping'>
@@ -164,7 +167,7 @@ const Cartitem = () => {
       style={{backgroundColor:'orange' , fontSize:"16px" ,fontWeight:"500" , color:"white"}}
       size="large "
       onClick={handleContinueShopping}
-      >Tiếp tục mua hàng</Button>
+      >{t("Continue to buy")}</Button>
     </div>)
     }
     </>

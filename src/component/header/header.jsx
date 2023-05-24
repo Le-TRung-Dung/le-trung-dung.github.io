@@ -1,6 +1,6 @@
 import './header.css'
 import logochonie from '../../image/chon.png';
-import { Input } from 'antd';
+import { Input , Dropdown, Space , Menu , Select } from 'antd';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { BiUserCircle } from 'react-icons/bi';
@@ -14,8 +14,8 @@ import { searchProducts } from '../../redux/productSlice';
 import Container from '../container/container';
 import { useTranslation ,  withTranslation } from 'react-i18next';
 
-
 function Header() {
+  const { Option } = Select;
   const { t, i18n } = useTranslation();
   const isLoggin = useSelector((state)=>state.accounSlice.isLoggin);
   const count = useSelector(selectCount);
@@ -25,10 +25,39 @@ function Header() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   
+  const items = Menu['items'] = [
+    {
+      key: '1',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="/">
+          {t('Sugar Cake')}
+        </a>
+      ),
+    },
+    {
+      key: '2',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+          {t('Bread')}
+        </a>
+      ),
+    },
+    {
+      key: '3',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
+          {t('Moon Cake')}
+        </a>
+      ),
+    },
+  ];
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
   };
   
+  const handleChangeLanguage = (value) => {
+    i18n.changeLanguage(value);
+  };
   // useEffect(() => {
   //   const results = products.filter(person =>
   //     person.name.toLowerCase().includes(searchTerm)
@@ -60,33 +89,35 @@ function Header() {
               <Link to="/"> {t('Home page')}</Link>
             </div>
             <div className="phantu-header-chonie">
-              <Link to="/sanpham">{t('Product')}</Link>
-              <ul className="sanpham-tonghop-header">
-                <li className="sanpham-tonghop-header-tem">
-                  <Link to="/sugarcake">Bánh ngọt</Link>
-                </li>
-                <li className="sanpham-tonghop-header-tem">
-                  <a href="">Bánh trung thu</a>
-                </li>
-                <li className="sanpham-tonghop-header-tem">
-                  <a href="">Bánh kem dừa</a>
-                </li>
-                <li className="sanpham-tonghop-header-tem">
-                  <a href="">Bánh quế</a>
-                </li>
-              </ul>
+              <Dropdown menu={{ items }}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                    {t('Product')}
+                  </Space>
+                </a>
+              </Dropdown>
             </div>
             <div className="phantu-header-chonie">
-              <Link to="/tintuc&khuyenmai">Tin tức & Khuyến mại</Link>
+              <Link to="/tintuc&khuyenmai">{t('News and promotions')}</Link>
             </div>
             <div className="phantu-header-chonie">
-              <Link to="/lienhe">Liên hệ</Link>
+              <Link to="/lienhe">{t('Contact')}</Link>
+            </div>
+            <div>
+              <Select
+                defaultValue="Ngôn ngữ"
+                onChange={handleChangeLanguage}
+                options={[
+                  { value: 'en', label: 'English' },
+                  { value: 'vn', label: 'Tiếng Việt' },
+                ]}
+              />
             </div>
             <div className="timkiem-header-chonie">
             <form onSubmit={handleSearch}>
               <input
                 type="text"
-                placeholder="Tìm kiếm"
+                placeholder={t("Search")}
                 onChange={handleInputChange}
                 value={searchTerm}
                 className="myinput"

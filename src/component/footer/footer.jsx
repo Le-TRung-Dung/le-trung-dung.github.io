@@ -5,11 +5,14 @@ import { BsInstagram , BsFillTelephoneFill} from 'react-icons/bs';
 import { IoLogoYoutube } from 'react-icons/io';
 import { AiFillHome } from 'react-icons/ai';
 import { CgMail } from 'react-icons/cg';
-
+import { useTranslation ,  withTranslation } from 'react-i18next';
 import { Link } from "react-router-dom";
 
 
 const Footer = () => {
+	const { t, i18n } = useTranslation();
+
+
     return ( 
         <div className="footer-chonie">
      		<div className="footer-chonie-overlay">
@@ -34,31 +37,31 @@ const Footer = () => {
      			        </div>
      			        <div className="footer-chonie-terms">
      			     	    <div className="footer-chonie-terms-item">
-     			     		     <h4>CHÍNH SÁCH</h4>
+     			     		     <h4>{t('Policy')}</h4>
      			     	    </div>
      			     	    <div className="footer-chonie-terms-item1">
-     			     		     <Link to='#'>
-     			     			Chính sách và quy định chung
+     			     		     <Link to='/regulations'>
+     			     			    {t("General policies and regulations")}
      			     		     </Link>
      			     	    </div>
      			     	    <div className="footer-chonie-terms-item1">
      			     		     <Link to='#'>
-     			     			Chính sách giao dịch, thanh toán
+     			     			    {t("Policy transaction, payment")}
      			     		     </Link>
      			     	    </div>
      			     	    <div className="footer-chonie-terms-item1">
      			     		     <Link to='#'>
-     			     			Chính sách đổi trả
+     			     			    {t("Return policy")}
      			     		     </Link>
      			     	    </div>
      			     	    <div className="footer-chonie-terms-item1">
      			     		     <Link to='#'>
-     			     			Chính sách bảo mật
+     			     			    {t("Privacy Policy")}
      			     		     </Link>
      			     	    </div>
      			     	    <div className="footer-chonie-terms-item1">
      			     		     <Link to='#'>
-     			     			Chính sách vận chuyển
+     			     			     {t("Shipping policy")}
      			     		     </Link>
      			     	    </div>
      			        </div>

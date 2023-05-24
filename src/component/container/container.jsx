@@ -1,14 +1,13 @@
 import './container.css'
 import iconcake from '../../image/iconcake.png'
-import sanpham from '../../image/1.png'
 import { Link , useNavigate } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
-import { AiOutlineMinus } from 'react-icons/ai';
 import { useDispatch ,useSelector } from 'react-redux';
 import { addItem } from '../../redux/cartSlice';
 import { useState } from 'react';
 import { Button, Drawer , Divider , Typography} from 'antd';
 import {increment} from '../../redux/counterproductslice';
+import { useTranslation ,  withTranslation } from 'react-i18next';
 import Item from 'antd/es/list/Item';
 import {
 	decrement,
@@ -16,6 +15,7 @@ import {
 import { increaseQuantity , decreaseQuantity ,selectCartItems } from '../../redux/cartSlice';
 
 const Container = () => {
+	const { t, i18n } = useTranslation();
 	const { Paragraph, Text } = Typography;
 	const [ellipsis, setEllipsis] = useState(true);
 	const dispatch = useDispatch()
@@ -62,7 +62,7 @@ const Container = () => {
      			     <div className="sanphambanchay">
      			     	<img src={iconcake} />
      			     	<h3>
-     			     		<span >Sản phẩm bán chạy</span>
+     			     		<span >{t("Hot selling products")}</span>
      			     	</h3>
      			     	<img src={iconcake} />
      			     </div>
@@ -104,11 +104,11 @@ const Container = () => {
 							style={{fontSize:"16px",backgroundColor:"orange"}}
 							size="large "
 							>
-								Xem thêm</Button>
+								{t("See more")}</Button>
 						</div>
 						)}
 				</div>
-				<Drawer title="Giỏ Hàng"
+				<Drawer title={t("Cart")}
 				        className='cart_sidebar' 
 				        placement="right" onClose={onClose} open={open}>
 				{itemtotal.map((item) => (
@@ -156,14 +156,14 @@ const Container = () => {
 					</>
 				))} 
 				    <div style={{textAlign:"end"}}>
-						<span>Tổng tiền : </span> 
+						<span>{t("Total money")} : </span> 
 						<span style={{fontSize:"16px" , fontWeight: "500"}}>{cartTotal.toLocaleString()}.Đ</span>
 					</div>
 					<div style={{textAlign:"center" , marginTop:"20px"}}>
 						<Button
 						style={{backgroundColor:'orange' ,fontWeight:"500" , color:"white" , width:"100%"}}
 						onClick={pay}
-						>Thanh toán</Button>
+						>{t("Pay")}</Button>
 					</div>
 
 				</Drawer>

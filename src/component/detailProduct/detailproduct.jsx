@@ -12,11 +12,13 @@ import {
     increment,
     selectCount,
   } from '../../redux/counterproductslice';
-  import { addItem  ,selectCartItems} from '../../redux/cartSlice';  
-  import "slick-carousel/slick/slick.css";
-  import "slick-carousel/slick/slick-theme.css";
+import { addItem  ,selectCartItems} from '../../redux/cartSlice';  
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useTranslation ,  withTranslation } from 'react-i18next';
 
 function ProductDetail() {
+    const { t, i18n } = useTranslation();
     const { Paragraph, Text } = Typography;
 	const [ellipsis, setEllipsis] = useState(true);
     const { id } = useParams();
@@ -87,14 +89,14 @@ function ProductDetail() {
                     <div className="detail_list_right">
                         <div className="detail_right_title">
                             <h1>{product.name}</h1>
-							<span> Mã sản phẩm: {id}</span>
+							<span>{t("Product code")} : {id}</span>
 							<hr />
                         </div>
 					<div className="detail_prince">
-                        <span> Giá: {product.price}</span>
+                        <span> {t("Price")} : {product.price}</span>
 					</div>
                     <div className="deatil_amount">
-                        <span>Số lượng: </span>
+                        <span>{t("Quantity")} : </span>
                         <button
                             className="decrement"
                             aria-label="Decrement value"
@@ -112,15 +114,15 @@ function ProductDetail() {
                         </button>
                      </div>
 						<div className="detail_actions">
-							<button onClick={()=>handleAddToCart(product)} className="actions1">Thêm vào giỏ hàng</button>
-							<button className="actions2">Mua ngay</button>
+							<button onClick={()=>handleAddToCart(product)} className="actions1">{t("Add to cart")}</button>
+							<button className="actions2">{t("Buy now")}</button>
 						</div>
                     </div>      
                 </div>
                 <div className='content2' style={{marginTop:"40px"}}>
                     <div className='products-tab'>
                         <div className='tab'>
-                             <p className='tab-text'>Mô tả chung </p>
+                             <p className='tab-text'>{t("General description")}</p>
                         </div>
                         <div className='content-product-tab'>                            
                             <p>{product.describe}</p>
@@ -128,8 +130,8 @@ function ProductDetail() {
                     </div>
                 </div>
                 <div className='suggest_product'>
-                    <h3>CÓ THỂ BẠN THÍCH</h3>
-                    <h2>sản phẩm cùng loại</h2>
+                    <h3>{t("Maybe you like")}</h3>
+                    <h2>{t("Related Products")}</h2>
                 </div>
                 <Slider {...settings}>
                 {filteredProducts.map((product) => (
