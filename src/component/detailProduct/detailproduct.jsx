@@ -16,6 +16,7 @@ import { addItem  ,selectCartItems} from '../../redux/cartSlice';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useTranslation ,  withTranslation } from 'react-i18next';
+import SuggestProduct from './suggestProduct/SuggestProduct';
 
 function ProductDetail() {
     const { t, i18n } = useTranslation();
@@ -129,44 +130,7 @@ function ProductDetail() {
                         </div>
                     </div>
                 </div>
-                <div className='suggest_product'>
-                    <h3>{t("Maybe you like")}</h3>
-                    <h2>{t("Related Products")}</h2>
-                </div>
-                <Slider {...settings}>
-                {filteredProducts.map((product) => (
-                <div className="dmspbanchay">
-                        <div className="dmspbanchay-list">
-                                    <div className="dmspbanchay-item" key={product.id}>
-                                        <div className="dmspbanchay-item-img">
-                                            <Link to={`/detailproduct/${product.id}`}><img src={product.image}/></Link >
-                                        </div>
-                                        <div className="dmspbanchay-item-title">
-                                            <Text
-                                                style={ellipsis ? { width: 150 } : undefined}
-                                                ellipsis={ellipsis ? true : false}
-                                            >
-                                                <Link to={`/detailproduct/${product.id}`}><div>{product.name}</div ></Link >
-                                            </Text>
-                                        </div>
-                                        <div className="dmspbanchay-item-prince">
-                                            <div className="dmspbanchay-item-prince-gia">
-                                                {product.price}
-                                            </div>
-                                            <div onClick={()=>handleAddToCart(product)} className="dmspbanchay-item-prince-action">
-                                                <button type="button">
-                                                <FaShoppingCart />
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                            
-                        </div>
-                    </div>
-                ))}
-                </Slider>
-                
-    
+                <SuggestProduct />  
             </div>
         </div>
     </>

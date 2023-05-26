@@ -1,34 +1,32 @@
-import "./container.css";
-import iconcake from "../../image/iconcake.png";
-import { Link, useNavigate } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { addItem } from "../../redux/cartSlice";
-import OrderOnline from "./orderOnline/orderOnline";
-import { useState } from "react";
-import { Button, Drawer, Divider, Typography } from "antd";
-import { increment } from "../../redux/counterproductslice";
+import "./SuggestProduct.css";
 import { useTranslation, withTranslation } from "react-i18next";
-import { decrement } from "../../redux/counterproductslice";
+import { Link, useNavigate } from "react-router-dom";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { Button, Drawer , Divider , Typography  } from 'antd';
+import { addItem   ,increaseQuantity , decreaseQuantity , selectCartItems} from '../../../redux/cartSlice';
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import {
-  increaseQuantity,
-  decreaseQuantity,
-  selectCartItems,
-} from "../../redux/cartSlice";
+  decrement,
+  increment,
+  selectCount,
+} from "../../../redux/counterproductslice";
+import { FaShoppingCart } from 'react-icons/fa';
 
-const Container = () => {
-  const { t, i18n } = useTranslation();
+
+const SuggestProduct = () => {
   const { Paragraph, Text } = Typography;
+  const { id } = useParams();
   const [ellipsis, setEllipsis] = useState(true);
-  const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
-  const [count, setCount] = useState(8);
-  const [open, setOpen] = useState(false);
-
+  const dispatch = useDispatch();
   const products = useSelector((state) => state.productSlice.product);
-  const searchResults = useSelector((state) => state.products);
-  // console.log(searchResults)
-
+  const [open, setOpen] = useState(false);
+  const count = useSelector(selectCount);
   const myCart = useSelector((state) => state.cartSlice.items);
   const cartTotal = useSelector((state) => state.cartSlice.total);
   const cartItems = useSelector(selectCartItems);
@@ -36,20 +34,29 @@ const Container = () => {
     cartItems.find((item) => item.id == e.id)
   );
 
-  const pay = () => {
-    navigate("/pay");
+  const product = products.find((e) => e.id == id);
+
+  var settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 1,
   };
-  const handleAddToCart = (product) => {
-    dispatch(addItem(product));
-    dispatch(increment());
-    setOpen(true);
+
+  const filteredProducts = products.filter(
+    (item) => item.category === product.category && item.id !== id
+  );
+  console.log(filteredProducts);
+
+  const handleCount = () => {
+    if (count > 0) dispatch(decrement());
   };
+   
   const onClose = () => {
     setOpen(false);
-  };
-  const handleShowMore = () => {
-    setCount(count + 4);
-  };
+  }; 
+  
   const handleIncrease = (product) => {
     dispatch(increaseQuantity(product.id));
     dispatch(increment());
@@ -59,21 +66,26 @@ const Container = () => {
     dispatch(decreaseQuantity(product.id));
     dispatch(decrement());
   };
+
+  const handleAddToCart = (product) => {
+    dispatch(addItem(product));
+    dispatch(increment())
+    setOpen(true);
+  };
+  
+  const pay = () => {
+    navigate("/pay");
+  };
   return (
-    <div className="container-chonie">
-      <div className="grid">
-        <div className="page1-container-chonie">
-          <div className="sanphambanchay">
-            <img src={iconcake} />
-            <h3>
-              <span>{t("Hot selling products")}</span>
-            </h3>
-            <img src={iconcake} />
-          </div>
-        </div>
-        <div className="dmspbanchay">
-          <div className="dmspbanchay-list">
-            {products.slice(0, count).map((product) => (
+    <>
+      <div className="suggest_product">
+        <h3>{t("Maybe you like")}</h3>
+        <h2>{t("Related Products")}</h2>
+      </div>
+      <Slider {...settings}>
+        {filteredProducts.map((product) => (
+          <div className="dmspbanchay">
+            <div className="dmspbanchay-list">
               <div className="dmspbanchay-item" key={product.id}>
                 <div className="dmspbanchay-item-img">
                   <Link to={`/detailproduct/${product.id}`}>
@@ -104,22 +116,11 @@ const Container = () => {
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-          {count < products.length && (
-            <div className="Loadmore">
-              <Button
-                type="primary"
-                onClick={handleShowMore}
-                style={{ fontSize: "16px", backgroundColor: "orange" }}
-                size="large "
-              >
-                {t("See more")}
-              </Button>
             </div>
-          )}
-        </div>
-        <Drawer
+          </div>
+        ))}
+      </Slider>
+      <Drawer
           title={t("Cart")}
           className="cart_sidebar"
           placement="right"
@@ -205,10 +206,8 @@ const Container = () => {
             </Button>
           </div>
         </Drawer>
-      </div>
-      <OrderOnline />
-    </div>
+    </>
   );
 };
 
-export default Container;
+export default SuggestProduct;

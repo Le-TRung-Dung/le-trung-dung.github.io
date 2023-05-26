@@ -2,7 +2,7 @@
 import React from 'react';
 import './App.css';
 import Header from './component/header/header';
-import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Layout from './layout/layout';
 import Footer from './component/footer/footer';
 import LoginLogout from './layout/loginlogout';
@@ -20,29 +20,29 @@ import './i18next'
 
 
 function App() {
-  return(
+  return (
     <Provider store={store}>
-    <div>
-      <BrowserRouter> 
-      <ScrollToTop>
-         <Header />
-        
-          <Routes>
-            <Route path='/' element={<Layout />} />
-            <Route path='/account' element={<LoginLogout />} />
-            <Route path='/register' element = {<RegisterForm />} /> 
-            <Route path='/cart' element ={<ItemCart />} />
-            <Route path='/pay' element ={<Pay />} />
-            <Route path='/detailproduct/:id' element ={<ProductDetail />} />
-            <Route path='/detailproduct/:id' element ={<Cartitem />} />
-            <Route path='/sugarcake' element ={<SugarCake />} />
-            <Route path='/regulations' element ={<Regulation />} />
-          </Routes>
+      <div>
+        <BrowserRouter>
+          <ScrollToTop>
+            <Header />
 
-          <Footer />
-      </ScrollToTop>
-      </BrowserRouter> 
-    </div> 
+            <Routes>
+              <Route path='/' element={<Layout />} />
+              <Route path='/account' element={<LoginLogout />} />
+              <Route path='/register' element={<RegisterForm />} />
+              <Route path='/cart' element={<ItemCart />} />
+              <Route path='/pay' element={<Pay />} />
+              <Route path='/detailproduct/:id' element={<ProductDetail />} />
+              <Route path='/detailproduct/:id' element={<Cartitem />} />
+              <Route path='/sugarcake' element={<SugarCake />} />
+              <Route path='/regulations' element={<Regulation />} />
+            </Routes>
+
+            <Footer />
+          </ScrollToTop>
+        </BrowserRouter>
+      </div>
     </Provider>
   )
 }

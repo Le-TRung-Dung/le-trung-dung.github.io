@@ -1,0 +1,88 @@
+.dat-online{
+	background-image: url(https://theme.hstatic.net/1000313040/1000406925/14/banform.jpg?v=1857);
+	background-size: cover;
+	background-repeat: no-repeat;
+	width: 100%;
+    margin-top: 50px;
+}
+.dat-online-table{
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 10px;
+	margin-bottom: 52px;
+}
+.dat-online{
+	width: 100%;
+	display: flex;
+	justify-content: center;
+}
+.dat-online-over{
+	margin-top: 52px;
+}
+.dat-online-title{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.dat-online-title h3{
+	color: #c0c906;
+	text-transform: uppercase;
+	font-size: 30px;
+	margin-top: 35px;
+}
+.dat-online-title2{
+    display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.dat-online-title2 h2{
+	color: white;
+	text-transform: uppercase;
+	font-size: 20px;
+}
+.oder-content{
+	flex-direction: column;
+}
+.oder-content-item1{
+	color: white;
+	font-size: 16px;
+	margin-left: 20px;
+    margin-top: 20px;
+}
+.oder-content-item2 input{
+	width: 550px;
+    padding: 20px;
+    font-size: 16px;
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-right: 20px;
+}
+.oder-content-xemthem1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    border-radius: 10px;
+    background: orange;
+    width: 120px;
+    height: 40px;
+    cursor: pointer;;
+}
+.oder-content-xemthem1 a{
+	color: #fff;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+}
+.oder-content-xemthem{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    padding-bottom: 35px;
+}
+.oder-content-xemthem:hover .oder-content-xemthem1{
+	background-color: #74c0fc;
+}
+.ant-form-item-control-input-content{
+    max-width: 0;
+}

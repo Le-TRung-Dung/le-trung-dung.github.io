@@ -105,7 +105,7 @@ function Header() {
             </div>
             <div>
               <Select
-                defaultValue="Ngôn ngữ"
+                defaultValue="Language"
                 onChange={handleChangeLanguage}
                 options={[
                   { value: 'en', label: 'English' },

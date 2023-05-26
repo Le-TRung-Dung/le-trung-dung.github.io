@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {  useDispatch , useSelector } from 'react-redux';
 import  { login }from "../../redux/accounSlice";
+import { useTranslation, withTranslation } from "react-i18next";
+
 
 const accounts = [
   { email: 'dung@gmail.com', password: '12345' },
@@ -13,7 +15,7 @@ const accounts = [
 
 const Login = () => {
   const dispatch = useDispatch()
-  
+  const { t, i18n } = useTranslation();
 
   const onFinish = (values) => {
     console.log('Success:', values);
@@ -36,7 +38,7 @@ const Login = () => {
     <div className="bannerlogin">
      		<div className="banneroverlay">
      			<div className="bannertext">
-     				<h2>đăng nhập</h2>
+     				<h2>{t("Log in")}</h2>
      			</div>
      		</div>
     </div>
@@ -48,32 +50,32 @@ const Login = () => {
     >
       <Form.Item
         name="email"
-        rules={[{ required: true, message: 'Vui lòng nhập email của bạn!' }]}
+        rules={[{ required: true, message: t('Please enter your email') }]}
       >
         <Input placeholder='Email' />
       </Form.Item>
 
       <Form.Item
         name="password"
-        rules={[{ required: true, message: 'Vui lòn nhập mật khẩu của bạn!' }]}
+        rules={[{ required: true, message: t('Please enter your password') }]}
       >
         <Input.Password placeholder='Mật khẩu' />
       </Form.Item>
 
       <Form.Item name="remember" valuePropName="checked">
-        <Checkbox>Nhớ mật khẩu</Checkbox>
+        <Checkbox>{t("Remember password")}</Checkbox>
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Đăng nhập
+          {t("Log in")}
         </Button>
       </Form.Item>
     </Form>
     <div className="login-text">
-			<p><Link to="/">Trở về</Link></p>
-			<p><Link to="/register">Đăng ký</Link></p>
-			<p><Link to='#'>Quên mật khẩu?</Link></p>
+			<p><Link to="/">{t("Return")}</Link></p>
+			<p><Link to="/register">{t("Register")}</Link></p>
+			<p><Link to='#'>{t("Forgot password")}</Link></p>
 		</div>
     </>
   );
