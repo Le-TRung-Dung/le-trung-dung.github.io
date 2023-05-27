@@ -16,6 +16,7 @@ import Cartitem from './component/cart/cart';
 import Pay from './component/pay/pay';
 import SugarCake from './component/typeCake/sugarCake/banhngot';
 import Regulation from './component/policy/regulation/regulation';
+import Payment from './component/policy/payment/payment';
 import './i18next'
 
 
@@ -37,6 +38,8 @@ function App() {
               <Route path='/detailproduct/:id' element={<Cartitem />} />
               <Route path='/sugarcake' element={<SugarCake />} />
               <Route path='/regulations' element={<Regulation />} />
+              <Route path='/payment' element={<Payment />} />
+
             </Routes>
 
             <Footer />

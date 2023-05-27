@@ -43,7 +43,7 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="footer-chonie-terms-item1">
-                <Link to="#">{t("Policy transaction, payment")}</Link>
+                <Link to="/payment">{t("Policy transaction, payment")}</Link>
               </div>
               <div className="footer-chonie-terms-item1">
                 <Link to="#">{t("Return policy")}</Link>

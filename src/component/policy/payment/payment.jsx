@@ -1,12 +1,12 @@
-import "./regulation.css";
 
-const Regulation = () => {
+
+const Payment = () => {
   return (
     <>
       <div className="bannerlogin">
         <div className="banneroverlay">
           <div className="bannertext">
-            <h2>CHÍNH SÁCH VÀ QUY ĐỊNH CHUNG</h2>
+            <h2>CHÍNH SÁCH GIAO DỊCH, THANH TOÁN</h2>
           </div>
         </div>
       </div>
@@ -15,4 +15,4 @@ const Regulation = () => {
   );
 };
 
-export default Regulation;
+export default Payment;

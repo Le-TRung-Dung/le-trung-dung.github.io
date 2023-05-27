@@ -26,8 +26,8 @@ const Container = () => {
   const [open, setOpen] = useState(false);
 
   const products = useSelector((state) => state.productSlice.product);
-  const searchResults = useSelector((state) => state.products);
-  // console.log(searchResults)
+  const searchResult = useSelector((state) => state.productSlice.searchResults);
+  console.log(searchResult)
 
   const myCart = useSelector((state) => state.cartSlice.items);
   const cartTotal = useSelector((state) => state.cartSlice.total);
@@ -35,7 +35,9 @@ const Container = () => {
   const itemtotal = myCart.map((e) =>
     cartItems.find((item) => item.id == e.id)
   );
+  
 
+  const displayProducts = searchResult.length > 0 ? searchResult : products;
   const pay = () => {
     navigate("/pay");
   };
@@ -73,7 +75,7 @@ const Container = () => {
         </div>
         <div className="dmspbanchay">
           <div className="dmspbanchay-list">
-            {products.slice(0, count).map((product) => (
+            {displayProducts.slice(0, count).map((product) => (
               <div className="dmspbanchay-item" key={product.id}>
                 <div className="dmspbanchay-item-img">
                   <Link to={`/detailproduct/${product.id}`}>

@@ -16,6 +16,7 @@ import anhsethu14 from "../image/14.png"
 import anhsethu15 from "../image/20.png"
 import anhsethu16 from "../image/16.png"
 const initialState = {
+  searchResults: [],
   product:[
     {
       id: 1,
@@ -160,11 +161,12 @@ export const productSlice = createSlice({
   reducers: {
     searchProducts: (state, action) => {
       const searchTerm = action.payload.toLowerCase();
-      return state.product.find((product) =>
-        product.name.toLowerCase().includes(searchTerm)
-      );
+      state.searchResults = state.product.filter(product => {
+        // Thực hiện tìm kiếm sản phẩm dựa trên thuộc tính nào đó của sản phẩm
+        // Ví dụ: Tìm kiếm theo tên sản phẩm
+        return product.name.toLowerCase().includes(searchTerm);
+      });
     },
-   
   },
 })
 

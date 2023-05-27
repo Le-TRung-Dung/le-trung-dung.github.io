@@ -1,6 +1,6 @@
 import './header.css'
 import logochonie from '../../image/chon.png';
-import { Input , Dropdown, Space , Menu , Select } from 'antd';
+import { Input , Dropdown, Space , Menu , Select , Button} from 'antd';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { BiUserCircle } from 'react-icons/bi';
@@ -53,6 +53,7 @@ function Header() {
   ];
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
+    console.log(searchTerm)
   };
   
   const handleChangeLanguage = (value) => {
@@ -65,8 +66,7 @@ function Header() {
   //   setSearchResults(results);
   // }, [searchTerm]);
 
-  const handleSearch = (event) => {
-    event.preventDefault();
+  const handleSearch = () => {
     dispatch(searchProducts(searchTerm));
   };
 
@@ -122,7 +122,7 @@ function Header() {
                 value={searchTerm}
                 className="myinput"
                />
-              <button type="submit" className="searchbutton"><BsSearch /></button>
+              <Button type="submit" onClick={handleSearch} className="searchbutton"><BsSearch /></Button>
             </form>
             </div>
             <div className="giohang-header-chonie">

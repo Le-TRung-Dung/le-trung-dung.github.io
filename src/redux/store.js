@@ -11,7 +11,7 @@ export const store = configureStore({
     accounSlice,
     productSlice,
     counterSlice,
-    products:searchProducts,
+    searchProducts,
 
 },
 })

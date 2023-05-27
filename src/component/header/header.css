@@ -145,7 +145,7 @@
 }
 .myinput{
 	height: 4px;
-    width: 143px;
+    width: 170px;
     border: 0;
     outline: none;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 9%);
@@ -163,7 +163,7 @@
     position: absolute;
     right: 0;
     margin-right: 5px;
-	margin-top: 8px;
+	margin-top: 2px;
 }
 .giohang-header-chonie-item button{
 	border: none;
