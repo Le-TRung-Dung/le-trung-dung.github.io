@@ -2,33 +2,51 @@ import React from "react";
 import { Form, Input, Button } from "antd";
 import "./index.css";
 import { registerUser, saveUserInfoToLocalStorage } from "../../auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation } from "react-i18next";
-
-// xử lý sự kiện đăng ký
-const onFinish = async (values) => {
-  const { email, password } = values;
-  const result = await registerUser(email, password);
-  if (result.success) {
-    saveUserInfoToLocalStorage(email); // lưu thông tin người dùng vào local storage
-    alert(result.message);
-    window.location.href = "/account"; // chuyển hướng đến trang đăng nhập
-  } else {
-    alert(result.message);
-  }
-};
-
-const handleButtonClick = () => {
-  // const onFinish = (values) => {
-  //     const { email, password } = values;
-  //     // xử lý đăng nhập ở đây
-  //   };
-};
+import { useState } from "react";
+import { Navigate } from "react-router-dom";
 
 const RegistrationForm = () => {
   const { t, i18n } = useTranslation();
-  
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleSignUp = () => {
+    // Kiểm tra nếu đã có tài khoản trong LocalStorage
+    const existingAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
+    // Kiểm tra xem tài khoản đã tồn tại chưa
+    const existingAccount = existingAccounts.find(
+      (account) => account.username === username
+    );
+    if (existingAccount) {
+      alert("Tài khoản đã tồn tại!");
+      return;
+    }
+    // Tạo tài khoản mới
+    const newAccount = {
+      username: username,
+      password: password,
+    };
+    // Lưu tài khoản mới vào LocalStorage
+    existingAccounts.push(newAccount);
+    localStorage.setItem("accounts", JSON.stringify(existingAccounts));
+    // Xóa thông tin đăng ký sau khi lưu thành công
+    setUsername("");
+    setPassword("");
+    alert("Đăng ký thành công!");
+    navigate('/account')
+  };
+  
   return (
     <>
       <div className="bannerlogin">
@@ -38,7 +56,7 @@ const RegistrationForm = () => {
           </div>
         </div>
       </div>
-      <Form name="register" onFinish={onFinish} scrollToFirstError>
+      <Form name="register" scrollToFirstError autoComplete="off">
         <Form.Item
           name="emailRegister"
           rules={[
@@ -52,7 +70,12 @@ const RegistrationForm = () => {
             },
           ]}
         >
-          <Input placeholder="Nhập gmail của bạn" />
+          <Input
+            placeholder="Nhập gmail của bạn"
+            value={username}
+            onChange={handleUsernameChange}
+            autoComplete="off"
+          />
         </Form.Item>
 
         <Form.Item
@@ -65,34 +88,15 @@ const RegistrationForm = () => {
           ]}
           hasFeedback
         >
-          <Input.Password placeholder="Nhập mật khẩu của bạn" />
-        </Form.Item>
-
-        <Form.Item
-          name="confirmPassword"
-          dependencies={["password"]}
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: "Bạn chưa nhập lại mật khẩu!",
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
-                }
-
-                return Promise.reject(new Error("Mật khẩu không trùng khớp!"));
-              },
-            }),
-          ]}
-        >
-          <Input.Password placeholder="Nhập lại mật khẩu của bạn" />
+          <Input.Password
+            placeholder="Nhập mật khẩu của bạn"
+            value={password}
+            onChange={handlePasswordChange}
+          />
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" onClick={handleButtonClick}>
+          <Button type="primary" htmlType="submit" onClick={handleSignUp}>
             Đăng ký
           </Button>
         </Form.Item>

@@ -114,7 +114,7 @@ function Header() {
               />
             </div>
             <div className="timkiem-header-chonie">
-            <form onSubmit={handleSearch}>
+            <form>
               <input
                 type="text"
                 placeholder={t("Search")}
