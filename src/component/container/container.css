@@ -38,6 +38,7 @@
 .dmspbanchay-item-img img{
 	height: 240px;
 	width: auto;
+    margin-top: 10px;
 }
 .dmspbanchay-item-img:hover img{
 	transform: scale(1.05);
@@ -47,7 +48,7 @@
     border-radius: 10px;
     background: #fff;
     width: 240px;
-    height: 350px;
+    height: 365px;
     margin-left: 20px;
     margin-right: 20px;
     overflow: hidden;
@@ -73,7 +74,7 @@
 .dmspbanchay-item-prince-gia{
 	background-color: #74c0fc;
 	height: 38px;
-	width: 110px;
+	width: 120px;
 	border-top-right-radius: 10px;
 	font-weight: 800;
     font-size: 16px;
@@ -146,4 +147,17 @@
 }
 .grid_item_name{
     margin-left: 20px;
+}
+.page1-container-chonie{
+    text-align: center;
+}
+.page1-container-chonie button img{
+    height: 25px;
+}
+.page1-container-chonie button{
+    padding: 5px 15px 5px 15px;
+    margin: 10px;
+    border: none;
+    background: #fff;
+    border-radius: 15px;
 }

@@ -16,12 +16,10 @@ const Login = () => {
 
   const handleLogin = () => {
     // Lấy danh sách tài khoản từ LocalStorage
-    const accounts = JSON.parse(localStorage.getItem("accounts")) || [];
+    const accounts = JSON.parse(localStorage.getItem("account")) || [];
     // Kiểm tra xem tài khoản và mật khẩu có khớp hay không
-    const matchedAccount = accounts.find(
-      (account) =>
-        account.username === username && account.password === password
-    );
+    const matchedAccount = accounts['email'] === username && accounts['password'] === password
+    console.log(matchedAccount)
     if (matchedAccount) {
       alert("Đăng nhập thành công!");
       navigate('/')
@@ -92,7 +90,7 @@ const Login = () => {
           <Link to="/register">{t("Register")}</Link>
         </p>
         <p>
-          <Link to="#">{t("Forgot password")}</Link>
+          <Link to="/forgotpassword">{t("Forgot password")}</Link>
         </p>
       </div>
     </>

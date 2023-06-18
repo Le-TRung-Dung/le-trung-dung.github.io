@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation } from "react-i18next";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { useLoginMutation } from "../../APIslice/apiAdminSlice";
 
 const RegistrationForm = () => {
   const { t, i18n } = useTranslation();
@@ -13,37 +14,51 @@ const RegistrationForm = () => {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const[registerUser]= useLoginMutation();
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
+
+
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
   };
 
-  const handleSignUp = () => {
-    // Kiểm tra nếu đã có tài khoản trong LocalStorage
-    const existingAccounts = JSON.parse(localStorage.getItem("accounts")) || [];
-    // Kiểm tra xem tài khoản đã tồn tại chưa
-    const existingAccount = existingAccounts.find(
-      (account) => account.username === username
-    );
-    if (existingAccount) {
-      alert("Tài khoản đã tồn tại!");
-      return;
-    }
-    // Tạo tài khoản mới
-    const newAccount = {
-      username: username,
-      password: password,
-    };
-    // Lưu tài khoản mới vào LocalStorage
-    existingAccounts.push(newAccount);
-    localStorage.setItem("accounts", JSON.stringify(existingAccounts));
-    // Xóa thông tin đăng ký sau khi lưu thành công
-    setUsername("");
-    setPassword("");
-    alert("Đăng ký thành công!");
+  // const handleSignUp = () => {
+  //   // Kiểm tra nếu đã có tài khoản trong LocalStorage
+  //   const existingAccounts = JSON.parse(localStorage.getItem("temporaryPassword")) || [];
+  //   // Kiểm tra xem tài khoản đã tồn tại chưa
+  //   // console.log(existingAccount)
+  //   // const existingAccount = existingAccounts.find(
+  //   //   (account) => account.username === username
+  //   // );
+  //   // if (existingAccount) {
+  //   //   alert("Tài khoản đã tồn tại!");
+  //   //   return;
+  //   // }
+  //   // Tạo tài khoản mới
+  //   const newAccount = {
+  //     username: username,
+  //     password: password,
+  //   };
+  //   // Lưu tài khoản mới vào LocalStorage
+  //   existingAccounts.push(newAccount);
+  //   localStorage.setItem("temporaryPassword", JSON.stringify(existingAccounts));
+  //   // Xóa thông tin đăng ký sau khi lưu thành công
+  //   setUsername("");
+  //   setPassword("");
+  //   alert("Đăng ký thành công!");
+  //   navigate('/account')
+  // };
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    const existingAccounts = JSON.parse(localStorage.getItem("account")) || [];
+    const account = { email: username, password: password };
+    // Lưu thông tin đăng ký vào localStorage
+    localStorage.setItem('account', JSON.stringify(account));
+    // Xử lý thành công, thực hiện hành động sau khi đăng ký thành công
+    alert('Đăng ký thành công!');
     navigate('/account')
   };
   

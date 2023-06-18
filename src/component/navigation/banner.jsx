@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper";
+import { useSearchProductMutation } from '../../APIslice/apiSlice';
 import { useSelector } from "react-redux";
 
-import banner1 from "../../image/banner.png";
-import banner2 from "../../image/banner2.jpg";
-import banner3 from "../../image/banner3.jpg";
-import banner4 from "../../image/banner4.jpg";
-import banner5 from "../../image/banner5.jpg";
+import banner1 from "../../image/bannerdienthoai3.jpg";
+import banner2 from "../../image/bannerdienthoai2.jpg";
+import banner3 from "../../image/bannerdienthoai3.jpg";
+import banner4 from "../../image/huawei.jpg";
 
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -15,11 +15,15 @@ import "swiper/css";
 import "./banner.css";
 
 const Banner = () => {
-  const searchResult = useSelector((state) => state.productSlice.searchResults);
+  const[ searchProduct, result]= useSearchProductMutation(
+    {
+      fixedCacheKey: 'share-product-search',
+    }
+  );
 
   return (
     <>
-      {searchResult.length > 0 ? (
+      {result?.data?.totalItems > 0 ? (
         <div className="bannerlogin">
           <div className="banneroverlay">
             <div className="bannertext">
@@ -53,9 +57,6 @@ const Banner = () => {
           </SwiperSlide>
           <SwiperSlide>
             <img src={banner4} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src={banner5} />
           </SwiperSlide>
         </Swiper>
       )}

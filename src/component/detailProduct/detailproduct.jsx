@@ -1,11 +1,9 @@
 import React from "react";
-import { useParams, Link } from "react-router-dom";
-import { FaShoppingCart } from "react-icons/fa";
-import { Button, Drawer, Divider, Typography } from "antd";
+import { useNavigate, useParams } from "react-router-dom";
+import {  Typography } from "antd";
 import "./detailProduct.css";
 import { useSelector, useDispatch } from "react-redux";
-import ReactImageMagnify from "react-image-magnify";
-import Slider from "react-slick";
+import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import {
   decrement,
@@ -13,34 +11,45 @@ import {
   selectCount,
 } from "../../redux/counterproductslice";
 import { addItem, selectCartItems } from "../../redux/cartSlice";
+import { useGetProductQuery } from "../../APIslice/apiSlice";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { useTranslation, withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import SuggestProduct from "./suggestProduct/SuggestProduct";
 
 function ProductDetail() {
   const { t, i18n } = useTranslation();
   const { Paragraph, Text } = Typography;
-  const [ellipsis, setEllipsis] = useState(true);
-  const { id } = useParams();
+  const {maSanpham} = useParams();
   const count = useSelector(selectCount);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
-  const products = useSelector((state) => state.productSlice.product);
-  const product = products.find((e) => e.id == id);
+  const{data:productBestseller}= useGetProductQuery({
+  });
+  const product = productBestseller?.find((e) => e.maSanPham == maSanpham);
+  console.log(product)
 
-  const filteredProducts = products.filter(
-    (item) => item.category === product.category && item.id !== id
-  );
-  console.log(filteredProducts);
+
+  // const filteredProducts = products.filter(
+  //   (item) => item.category === product.category && item.id !== maSanPham
+  // );
+  // console.log(filteredProducts);
   const handleCount = () => {
     if (count > 0) dispatch(decrement());
   };
 
+  const img="https://localhost:44335/";
+  
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
     dispatch(increment());
-    console.log(product);
+  };
+
+  const handleBuyNow = (product) => {
+    dispatch(addItem(product));
+    dispatch(increment());
+    navigate('/pay')
   };
 
   return (
@@ -48,7 +57,7 @@ function ProductDetail() {
       <div className="bannerlogin">
         <div className="banneroverlay">
           <div className="bannertext">
-            <h2>{product.name}</h2>
+            <h2>{product?.tenSanPham}</h2>
           </div>
         </div>
       </div>
@@ -57,40 +66,22 @@ function ProductDetail() {
           <div className="detail_list">
             <div className="detail_list_left">
               <div className="detail_img">
-                <img src={product.image} />
+                <img src={img + product?.anh} />
               </div>
             </div>
             <div className="detail_list_right">
               <div className="detail_right_title">
-                <h1>{product.name}</h1>
+                <h1>{product?.tenSanPham}</h1>
                 <span>
-                  {t("Product code")} : {id}
+                  {t("Product code")} : {maSanpham}
                 </span>
                 <hr />
               </div>
               <div className="detail_prince">
                 <span>
                   {" "}
-                  {t("Price")} : {product.price}
+                  {t("Price")} : {product?.gia} đ
                 </span>
-              </div>
-              <div className="deatil_amount">
-                <span>{t("Quantity")} : </span>
-                <button
-                  className="decrement"
-                  aria-label="Decrement value"
-                  onClick={handleCount}
-                >
-                  -
-                </button>
-                <span>{count}</span>
-                <button
-                  className="increment"
-                  aria-label="Increment value"
-                  onClick={() => dispatch(increment())}
-                >
-                  +
-                </button>
               </div>
               <div className="detail_actions">
                 <button
@@ -99,7 +90,10 @@ function ProductDetail() {
                 >
                   {t("Add to cart")}
                 </button>
-                <button className="actions2">{t("Buy now")}</button>
+                <button 
+                  onClick={() => handleBuyNow(product)}
+                 className="actions2">{t("Buy now")}
+                </button>
               </div>
             </div>
           </div>
@@ -109,11 +103,14 @@ function ProductDetail() {
                 <p className="tab-text">{t("General description")}</p>
               </div>
               <div className="content-product-tab">
-                <p>{product.describe}</p>
+                <p>Hệ điều hành: {product?.heDieuHanh}</p>
+                <p>Màn hình: {product?.manHinh}</p>
+                <p>Ram: {product?.ram}</p>
+
               </div>
             </div>
           </div>
-          <SuggestProduct />
+          {/* <SuggestProduct /> */}
         </div>
       </div>
     </>

@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { Button, Drawer , Divider , Typography  } from 'antd';
 import { addItem   ,increaseQuantity , decreaseQuantity , selectCartItems} from '../../../redux/cartSlice';
+import { useGetProductQuery } from "../../../APIslice/apiSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
@@ -19,22 +20,22 @@ import { FaShoppingCart } from 'react-icons/fa';
 
 const SuggestProduct = () => {
   const { Paragraph, Text } = Typography;
-  const { id } = useParams();
+  const { maSanpham } = useParams();
   const [ellipsis, setEllipsis] = useState(true);
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.productSlice.product);
   const [open, setOpen] = useState(false);
   const count = useSelector(selectCount);
   const myCart = useSelector((state) => state.cartSlice.items);
   const cartTotal = useSelector((state) => state.cartSlice.total);
   const cartItems = useSelector(selectCartItems);
   const itemtotal = myCart.map((e) =>
-    cartItems.find((item) => item.id == e.id)
+    cartItems.find((item) => item.maSanPham == e.maSanPham)
   );
-
-  const product = products.find((e) => e.id == id);
+  
+  const{data:product}= useGetProductQuery({
+  });
 
   var settings = {
     dots: true,
@@ -46,8 +47,8 @@ const SuggestProduct = () => {
     autoplaySpeed: 1500
   };
 
-  const filteredProducts = products.filter(
-    (item) => item.category === product.category && item.id !== id
+  const filteredProducts = product.filter(
+    (item) => item.heDieuHanh === product.heDieuHanh && item.maSanPham !== maSanpham
   );
   console.log(filteredProducts);
 

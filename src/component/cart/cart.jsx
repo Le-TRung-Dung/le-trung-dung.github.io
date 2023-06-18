@@ -29,21 +29,21 @@ const Cartitem = () => {
   const cartItems = useSelector(selectCartItems);
 
   const itemtotal = myCart.map((e) =>
-    cartItems.find((item) => item.id == e.id)
+    cartItems.find((item) => item.maSanPham == e.maSanPham)
   );
 
   const handleIncrease = (product) => {
-    dispatch(increaseQuantity(product.id));
+    dispatch(increaseQuantity(product.maSanPham));
     dispatch(increment());
   };
 
   const handleDecrease = (product) => {
-    dispatch(decreaseQuantity(product.id));
+    dispatch(decreaseQuantity(product.maSanPham));
     dispatch(decrement());
   };
 
   const handleRemove = (product) => {
-    dispatch(removeItem(product.id));
+    dispatch(removeItem(product.maSanPham));
     dispatch(decrement());
   };
 
@@ -87,8 +87,10 @@ const Cartitem = () => {
         </div>
       ) : (
         <div>
-          {itemtotal.map((item) => (
-            <div key={item.id}>
+          {itemtotal.map((item, index) => {
+              const img="https://localhost:44335/";
+              return(
+            <div key={item.maSanPham}>
               <div className="container">
                 <div className="grid">
                   <div className="page-wrapper">
@@ -100,12 +102,12 @@ const Cartitem = () => {
                               <tr className="tr_cart">
                                 <td className="td_img_product">
                                   <Link to>
-                                    <img src={item.image} />
+                                    <img src={img + item?.anh} />
                                   </Link>
                                 </td>
                                 <td className="td_name_prodct">
-                                  <Link to={`/detailproduct/${item.id}`}>
-                                    {item.name}
+                                  <Link to={`/detailproduct/${item.maSanPham}`}>
+                                    {item.tenSanPham}
                                   </Link>
                                   <br />
                                   <small>{item.size}</small>
@@ -118,7 +120,7 @@ const Cartitem = () => {
                                   </Button>
                                 </td>
                                 <td className="td_price">
-                                  <span>{item.price.toLocaleString()}</span>
+                                  <span>{item.gia.toLocaleString()}</span>
                                 </td>
                                 <td className="td_amount">
                                   <div>
@@ -156,7 +158,8 @@ const Cartitem = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )
+        })}
         </div>
       )}
       <div className="Total">

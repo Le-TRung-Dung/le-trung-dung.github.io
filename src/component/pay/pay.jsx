@@ -3,12 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   Button,
-  Checkbox,
   Form,
   Input,
   Radio,
-  Table,
-  useForm,
   Breadcrumb,
 } from "antd";
 import { selectCartItems, clearCart } from "../../redux/cartSlice";
@@ -17,28 +14,41 @@ import { remove } from "../../redux/counterproductslice";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { isFulfilled } from "@reduxjs/toolkit";
-import { useTranslation, withTranslation } from "react-i18next";
+import { useTranslation } from "react-i18next";
+import { useCreatDonHangMutation } from '../../APIslice/apiSlice';
 
 const Pay = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [error, setError] = useState(true);
   const [isOrdered, setIsOrdered] = useState(true);
   const [orderNumber, setOrderNumber] = useState("");
   const [selectedValue, setSelectedValue] = useState(null);
+
+  const[createDonHang, result]= useCreatDonHangMutation(
+    {
+      fixedCacheKey: 'share-product-search',
+    }
+  );
 
   const myCart = useSelector((state) => state.cartSlice.items);
 
   const cartItems = useSelector(selectCartItems);
 
   const itemtotal = myCart.map((e) =>
-    cartItems.find((item) => item.id == e.id)
+    cartItems.find((item) => item.maSanPham == e.maSanPham)
   );
+  
+  const maSanpham = itemtotal.map(e => e.maSanPham);
+  const soluong = itemtotal.map(e => e.quantity);
+  const gia = itemtotal.map(e => e.gia);
+
+  console.log(name)
 
   const cartTotal = useSelector((state) => state.cartSlice.total);
 
@@ -54,6 +64,10 @@ const Pay = () => {
     setAddress(e.target.value);
   };
 
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
+
   const handleRadioChange = (e) => {
     setSelectedValue(e.target.value);
   };
@@ -62,6 +76,20 @@ const Pay = () => {
     if (!name || !phoneNumber || !address) {
       return;
     } else {
+      createDonHang({
+        "tenKhachHang": name,
+        "sdt": phoneNumber,
+        "diaChi": address,
+        "email": email,
+        "thanhTien": cartTotal,
+        "listjson_chitietdh": [
+          {
+            "maSanPham": maSanpham[0],
+            "soLuong": soluong[0],
+            "giaBan": gia[0],
+          }
+        ]
+      });
       setIsOrdered(false);
       const newOrderNumber = Math.floor(Math.random() * 100000000);
       setOrderNumber(newOrderNumber);
@@ -172,6 +200,19 @@ const Pay = () => {
                           placeholder={t("Address")}
                         />
                       </Form.Item>
+                      <Form.Item
+                        name="email"
+                        rules={[
+                          { required: true, message: "Nhập email của bạn!" },
+                        ]}
+                        style={{ width: "100%" }}
+                      >
+                        <Input
+                          value={email}
+                          onChange={handleEmail}
+                          placeholder='email'
+                        />
+                      </Form.Item>
                       <div>
                         <p style={{ fontSize: "20px" }}>
                           {t("Payment methods")}
@@ -265,7 +306,9 @@ const Pay = () => {
           <div className="sidebar">
             <div className="Sidebar-content">
               <div className="sidebar_table" style={{ marginBottom: "30px" }}>
-                {itemtotal.map((item) => (
+              {itemtotal.map((item, index) => {
+              const img="https://localhost:44335/";
+              return(
                   <table className="product_table" key={item.id}>
                     <thead>
                       <tr>
@@ -280,7 +323,7 @@ const Pay = () => {
                         <td className="product_imge">
                           <div className="product-thumbnail">
                             <div className="product-thumbnail-wrapper">
-                              <img src={item.image}></img>
+                              <img src={img + item?.anh} />
                             </div>
                             <div className="product-thumbnail-quantity">
                               {item.quantity}
@@ -288,8 +331,7 @@ const Pay = () => {
                           </div>
                         </td>
                         <td className="product-description">
-                          <div className="product_name">{item.name}</div>
-                          <div className="product_size">{item.size}</div>
+                          <div className="product_name">{item.tenSanPham}</div>
                         </td>
                         <td style={{ paddingLeft: "100px", fontSize: "large" }}>
                           {item.totalPrice.toLocaleString()}
@@ -297,7 +339,7 @@ const Pay = () => {
                       </tr>
                     </tbody>
                   </table>
-                ))}
+                )})}
               </div>
             </div>
             <div className="remove_cart">

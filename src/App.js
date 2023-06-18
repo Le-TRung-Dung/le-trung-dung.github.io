@@ -14,9 +14,14 @@ import { Provider } from 'react-redux';
 import ProductDetail from './component/detailProduct/detailproduct';
 import Cartitem from './component/cart/cart';
 import Pay from './component/pay/pay';
-import SugarCake from './component/typeCake/sugarCake/banhngot';
+import Apple from './component/typeCake/sugarCake/banhngot';
 import Regulation from './component/policy/regulation/regulation';
 import Payment from './component/policy/payment/payment';
+import ForgotPassword from './component/forgotPassword/forgotPassword';
+import Samsung from './component/typeCake/sugarCake/samsung';
+import Oppo from './component/typeCake/sugarCake/oppo';
+import Xiaomi from './component/typeCake/sugarCake/xiaomi';
+import ChangePassword from './component/forgotPassword/changePassword';
 import './i18next'
 
 
@@ -30,15 +35,22 @@ function App() {
 
             <Routes>
               <Route path='/' element={<Layout />} />
-              <Route path='/account' element={<LoginLogout />} />
+              <Route exact path='/account' element={<LoginLogout />} />
               <Route path='/register' element={<RegisterForm />} />
               <Route path='/cart' element={<ItemCart />} />
               <Route path='/pay' element={<Pay />} />
-              <Route path='/detailproduct/:id' element={<ProductDetail />} />
-              <Route path='/detailproduct/:id' element={<Cartitem />} />
-              <Route path='/sugarcake' element={<SugarCake />} />
+              <Route path='/detailproduct/:maSanpham' element={<ProductDetail />} />
+              <Route path='/detailproduct/:maSanPham' element={<Cartitem />} />
+              <Route path='/apple' element={<Apple />} />
+              <Route path='/samsung' element={<Samsung />} />
               <Route path='/regulations' element={<Regulation />} />
               <Route path='/payment' element={<Payment />} />
+              <Route path='/forgotpassword' element={<ForgotPassword />} />
+              <Route path='/changepassword' element={<ChangePassword />} />
+              <Route path='/oppo' element={<Oppo />} />
+              <Route path='/xiaomi' element={<Xiaomi />} />
+
+              
 
             </Routes>
 

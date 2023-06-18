@@ -1,5 +1,5 @@
 import "./footer.css";
-import logochonie from "../../image/logochonie.png";
+import logochonie from "../../image/logochinhpng.png";
 import { GrFacebook } from "react-icons/gr";
 import { BsInstagram, BsFillTelephoneFill } from "react-icons/bs";
 import { IoLogoYoutube } from "react-icons/io";
@@ -57,7 +57,7 @@ const Footer = () => {
             </div>
             <div className="footer-chonie-terms">
               <div className="footer-chonie-terms-item">
-                <h4>CHONIE.CAKE</h4>
+                <h4>VINATECH</h4>
               </div>
               <div className="footer-chonie-terms-item1">
                 <p>

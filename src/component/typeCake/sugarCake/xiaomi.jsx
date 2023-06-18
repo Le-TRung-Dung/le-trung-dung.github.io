@@ -15,7 +15,7 @@ import {
     selectCartItems,
   } from "../../../redux/cartSlice";
 
-const Apple = () => {
+const Xiaomi = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
@@ -35,7 +35,7 @@ const Apple = () => {
     cartItems.find((item) => item.maSanPham == e.maSanPham)
   );
 
-  const filteredProducts = product?.filter((product) => product?.maLoai == 1);
+  const filteredProducts = product?.filter((product) => product?.maLoai == 4);
 
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
@@ -66,7 +66,7 @@ const Apple = () => {
       <div className="bannerlogin">
         <div className="banneroverlay">
           <div className="bannertext">
-            <h2>Apple</h2>
+            <h2>Xiaomi</h2>
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@ const Apple = () => {
         <div className="grid">
           <div className="wrapper">
             <div className="inner">
-              <h1 className="text_center">Apple</h1>
+              <h1 className="text_center">Xiaomi</h1>
             </div>
             <div className="dmspbanchay">
               <div className="dmspbanchay-list">
@@ -210,4 +210,4 @@ const Apple = () => {
   );
 };
 
-export default Apple;
+export default Xiaomi;

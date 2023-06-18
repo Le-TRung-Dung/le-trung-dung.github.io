@@ -1,17 +1,16 @@
 import './header.css'
-import logochonie from '../../image/chon.png';
+import logochonie from '../../image/logochinhpng.png';
 import { Input , Dropdown, Space , Menu , Select , Button} from 'antd';
 import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import { BiUserCircle } from 'react-icons/bi';
 import { BsSearch } from 'react-icons/bs';
 import React, { useState , useEffect } from 'react';
+import { useSearchProductMutation } from '../../APIslice/apiSlice';
 import Login from '../login/login';
 import  { login }from "../../redux/accounSlice";
 import { useSelector, useDispatch } from 'react-redux'
 import { selectCount } from '../../redux/counterproductslice';
-import { searchProducts } from '../../redux/productSlice';
-import Container from '../container/container';
 import { useTranslation ,  withTranslation } from 'react-i18next';
 
 function Header() {
@@ -19,34 +18,45 @@ function Header() {
   const { t, i18n } = useTranslation();
   const isLoggin = useSelector((state)=>state.accounSlice.isLoggin);
   const count = useSelector(selectCount);
-  const products = useSelector((state)=>state.productSlice.product);
   const dispatch = useDispatch()
-  const [item, setitem] = useState(products);
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  
+  const[searchProduct, result]= useSearchProductMutation(
+    {
+      fixedCacheKey: 'share-product-search',
+    }
+  );
+
+
   const items = Menu['items'] = [
     {
       key: '1',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="/">
-          {t('Sugar Cake')}
+        <a target="_blank" rel="noopener noreferrer" href="/apple">
+          Apple
         </a>
       ),
     },
     {
       key: '2',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
-          {t('Bread')}
+        <a target="_blank" rel="noopener noreferrer" href="/samsung">
+          Samsung
         </a>
       ),
     },
     {
       key: '3',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="https://www.luohanacademy.com">
-          {t('Moon Cake')}
+        <a target="_blank" rel="noopener noreferrer" href="oppo">
+          Oppo
+        </a>
+      ),
+    },
+    {
+      key: '4',
+      label: (
+        <a target="_blank" rel="noopener noreferrer" href="xiaomi">
+          Xiaomi
         </a>
       ),
     },
@@ -59,15 +69,13 @@ function Header() {
   const handleChangeLanguage = (value) => {
     i18n.changeLanguage(value);
   };
-  // useEffect(() => {
-  //   const results = products.filter(person =>
-  //     person.name.toLowerCase().includes(searchTerm)
-  //   );
-  //   setSearchResults(results);
-  // }, [searchTerm]);
 
   const handleSearch = () => {
-    dispatch(searchProducts(searchTerm));
+    searchProduct({
+        "pageIndex": 1,
+        "pageSize": 10,
+        "productName": searchTerm
+    })
   };
 
   const handleLogout = () => {

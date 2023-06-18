@@ -9,6 +9,8 @@ import { useState } from "react";
 import { Button, Drawer, Divider, Typography } from "antd";
 import { increment } from "../../redux/counterproductslice";
 import { useTranslation, withTranslation } from "react-i18next";
+import { useGetProductQuery } from "../../APIslice/apiSlice";
+import { useSearchProductMutation } from '../../APIslice/apiSlice';
 import { decrement } from "../../redux/counterproductslice";
 import {
   increaseQuantity,
@@ -24,19 +26,24 @@ const Container = () => {
   const navigate = useNavigate();
   const [count, setCount] = useState(8);
   const [open, setOpen] = useState(false);
-
-  const products = useSelector((state) => state.productSlice.product);
-  const searchResult = useSelector((state) => state.productSlice.searchResults);
-  console.log(searchResult);
+ 
+  const{data:product}= useGetProductQuery({
+  });
 
   const myCart = useSelector((state) => state.cartSlice.items);
   const cartTotal = useSelector((state) => state.cartSlice.total);
   const cartItems = useSelector(selectCartItems);
   const itemtotal = myCart.map((e) =>
-    cartItems.find((item) => item.id == e.id)
+    cartItems.find((item) => item.maSanPham == e.maSanPham)
   );
+  const[ searchProduct, result]= useSearchProductMutation(
+    {
+      fixedCacheKey: 'share-product-search',
+    }
+  );
+  
+  const displayProducts = result?.data?.totalItems  > 0 ? result?.data?.data : product;
 
-  const displayProducts = searchResult.length > 0 ? searchResult : products;
   const pay = () => {
     navigate("/pay");
   };
@@ -52,20 +59,20 @@ const Container = () => {
     setCount(count + 4);
   };
   const handleIncrease = (product) => {
-    dispatch(increaseQuantity(product.id));
+    dispatch(increaseQuantity(product.maSanPham));
     dispatch(increment());
   };
 
   const handleDecrease = (product) => {
-    dispatch(decreaseQuantity(product.id));
+    dispatch(decreaseQuantity(product.maSanPham));
     dispatch(decrement());
   };
   return (
     <div className="container-chonie">
       <div className="grid">
-        {searchResult.length > 0 ? (
+        {result?.data?.totalItems > 0 ? (
           <div style={{ textAlign: "center" }}>
-            <h1 style={{ fontWeight: "100" , color:"#333333" }}>KẾT QUẢ TÌM KIẾM SẢN PHẨM : "{searchResult.length}" KẾT QUẢ</h1>
+            <h1 style={{ fontWeight: "100" , color:"#333333" }}>KẾT QUẢ TÌM KIẾM SẢN PHẨM : "{result?.data?.totalItems}" KẾT QUẢ</h1>
             <Divider />
           </div>
         ) : (
@@ -81,11 +88,14 @@ const Container = () => {
         )}
         <div className="dmspbanchay">
           <div className="dmspbanchay-list">
-            {displayProducts.slice(0, count).map((product) => (
-              <div className="dmspbanchay-item" key={product.id}>
+            {displayProducts?.slice(0,count).map((product, index) => {
+              const img="https://localhost:44335/";
+              return(
+            
+              <div className="dmspbanchay-item" key={index}>
                 <div className="dmspbanchay-item-img">
-                  <Link to={`/detailproduct/${product.id}`}>
-                    <img src={product.image} />
+                  <Link to={`/detailproduct/${product.maSanPham}`}>
+                    <img src= {img + product?.anh} />
                   </Link>
                 </div>
                 <div className="dmspbanchay-item-title">
@@ -93,14 +103,14 @@ const Container = () => {
                     style={ellipsis ? { width: 150 } : undefined}
                     ellipsis={ellipsis ? true : false}
                   >
-                    <Link to={`/detailproduct/${product.id}`}>
-                      <div>{product.name}</div>
+                    <Link to={`/detailproduct/${product.maSanPham}`}>
+                      <div>{product?.tenSanPham}</div>
                     </Link>
                   </Text>
                 </div>
                 <div className="dmspbanchay-item-prince">
                   <div className="dmspbanchay-item-prince-gia">
-                    {product.price}
+                    {product.gia.toLocaleString()}
                   </div>
                   <div
                     onClick={() => handleAddToCart(product)}
@@ -112,9 +122,10 @@ const Container = () => {
                   </div>
                 </div>
               </div>
-            ))}
+              )
+              })}
           </div>
-          {count < products.length && (
+          {count < product?.length && (
             <div className="Loadmore">
               <Button
                 type="primary"
@@ -135,19 +146,20 @@ const Container = () => {
         onClose={onClose}
         open={open}
       >
-        {itemtotal.map((item, index) => (
+        {itemtotal.map((item, index) => {
+              const img="https://localhost:44335/";
+              return(
           <>
             <div className="cart_ajaxcart" key={index}>
               <div className="ajaxcart_iner">
                 <div className="grid_item_img">
                   <Link to>
-                    <img src={item.image} />
+                    <img src={img + item?.anh}/>
                   </Link>
                 </div>
                 <div className="grid_item_name">
                   <div>
-                    <Link>{item.name}</Link>
-                    <p>{item.size}</p>
+                    <Link>{item.tenSanPham}</Link>
                   </div>
                   <div style={{ display: "flex" }}>
                     <div>
@@ -193,7 +205,8 @@ const Container = () => {
             </div>
             <Divider />
           </>
-        ))}
+        )
+      })}
         <div style={{ textAlign: "end" }}>
           <span>{t("Total money")} : </span>
           <span style={{ fontSize: "16px", fontWeight: "500" }}>
@@ -214,7 +227,7 @@ const Container = () => {
           </Button>
         </div>
       </Drawer>
-      <OrderOnline />
+      {/* <OrderOnline /> */}
     </div>
   );
 };
