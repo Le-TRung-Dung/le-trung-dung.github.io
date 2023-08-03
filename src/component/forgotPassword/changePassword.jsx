@@ -11,7 +11,7 @@ function ChangePassword() {
       (account) =>
         account.username === email
     );
-    console.log(matchedAccount['password'])
+
     if (matchedAccount) {
       matchedAccount['password'] = newPassword; // Đặt lại mật khẩu mới trong tài khoản
       setMessage("Mật khẩu đã được thay đổi thành công.");
@@ -19,7 +19,6 @@ function ChangePassword() {
       setMessage("Email không tồn tại trong hệ thống.");
     }
   }
-  console.log(newPassword)
 
   return (
     <>

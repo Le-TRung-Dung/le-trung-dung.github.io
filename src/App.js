@@ -22,6 +22,7 @@ import Samsung from './component/typeCake/sugarCake/samsung';
 import Oppo from './component/typeCake/sugarCake/oppo';
 import Xiaomi from './component/typeCake/sugarCake/xiaomi';
 import ChangePassword from './component/forgotPassword/changePassword';
+import SearchProduct from './component/search/search';
 import './i18next'
 
 
@@ -49,7 +50,8 @@ function App() {
               <Route path='/changepassword' element={<ChangePassword />} />
               <Route path='/oppo' element={<Oppo />} />
               <Route path='/xiaomi' element={<Xiaomi />} />
-
+              <Route path='/search' element={<SearchProduct />} />
+              
               
 
             </Routes>

@@ -1,67 +1,80 @@
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, DatePicker, Space } from "antd";
 import "./index.css";
 import { registerUser, saveUserInfoToLocalStorage } from "../../auth";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation, withTranslation } from "react-i18next";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useLoginMutation } from "../../APIslice/apiAdminSlice";
+import {
+  useLoginMutation,
+  useRegisterMutation,
+} from "../../APIslice/apiAdminSlice";
 
 const RegistrationForm = () => {
   const { t, i18n } = useTranslation();
   const [username, setUsername] = useState("");
+  const [date, setDate] = useState("");
+  const [sex, setSex] = useState("");
+  const [gmail, setGmail] = useState("");
+  const [numberphone, setNumberphone] = useState("");
+  const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const[registerUser]= useLoginMutation();
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-  };
+  const [registerUser,data] = useRegisterMutation(
+    {
+      fixedCacheKey: 'shared-update-post',
+    }
+  );
 
+  const checkExistingAccount = (username) => {
+    const existingAccounts = localStorage.getItem('accounts');
+    if (existingAccounts) {
+      const parsedAccounts = JSON.parse(existingAccounts);
+      
+      if (parsedAccounts.includes(username)) {
+        return true; // Tài khoản đã tồn tại
+      }
+    }
+    return false; // Tài khoản không tồn tại
+  }
 
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
-
-  // const handleSignUp = () => {
-  //   // Kiểm tra nếu đã có tài khoản trong LocalStorage
-  //   const existingAccounts = JSON.parse(localStorage.getItem("temporaryPassword")) || [];
-  //   // Kiểm tra xem tài khoản đã tồn tại chưa
-  //   // console.log(existingAccount)
-  //   // const existingAccount = existingAccounts.find(
-  //   //   (account) => account.username === username
-  //   // );
-  //   // if (existingAccount) {
-  //   //   alert("Tài khoản đã tồn tại!");
-  //   //   return;
-  //   // }
-  //   // Tạo tài khoản mới
-  //   const newAccount = {
-  //     username: username,
-  //     password: password,
-  //   };
-  //   // Lưu tài khoản mới vào LocalStorage
-  //   existingAccounts.push(newAccount);
-  //   localStorage.setItem("temporaryPassword", JSON.stringify(existingAccounts));
-  //   // Xóa thông tin đăng ký sau khi lưu thành công
-  //   setUsername("");
-  //   setPassword("");
-  //   alert("Đăng ký thành công!");
-  //   navigate('/account')
-  // };
   const handleSignUp = (e) => {
-    e.preventDefault();
-    const existingAccounts = JSON.parse(localStorage.getItem("account")) || [];
-    const account = { email: username, password: password };
-    // Lưu thông tin đăng ký vào localStorage
-    localStorage.setItem('account', JSON.stringify(account));
-    // Xử lý thành công, thực hiện hành động sau khi đăng ký thành công
-    alert('Đăng ký thành công!');
-    navigate('/account')
-  };
-  
+    if (!username || !date || !sex || !gmail || !numberphone || !account || !password) {
+      alert("Hãy điền đầy đủ thông tin")
+      return;
+    } else {
+    registerUser({
+      listjson_nguoidung: [
+        {
+          hoten: username,
+          ngaySinh: date, //"1992-03-20"
+          gioiTinh: sex,
+          email: gmail,
+          dienThoai: numberphone,
+          trangThai: true,
+        },
+      ],
+      taiKhoan: account,
+      matKhau: password,
+      trangThai: true,
+      loaiQuyen: "admin",
+    })
+    }
+    const existingAccounts = localStorage.getItem('accounts');
+    console.log(existingAccounts)
+      if (existingAccounts) {
+        const parsedAccounts = JSON.parse(existingAccounts)
+        console.log(parsedAccounts)
+        const foundAccount = parsedAccounts['email'] === account && parsedAccounts['password'] === password
+        console.log(foundAccount)  
+        if (foundAccount) {
+          alert("Tài khoản đã tồn tại trong LocalStorage");
+          return;
+        }
+      }
+};
   return (
     <>
       <div className="bannerlogin">
@@ -71,48 +84,66 @@ const RegistrationForm = () => {
           </div>
         </div>
       </div>
-      <Form name="register" scrollToFirstError autoComplete="off">
-        <Form.Item
-          name="emailRegister"
-          rules={[
-            {
-              type: "email",
-              message: "The input is not valid E-mail!",
-            },
-            {
-              required: true,
-              message: "Bạn chưa nhập gmail",
-            },
-          ]}
-        >
+      <Form onFinish={handleSignUp}>
+        <Form.Item rules={[{ required: true }]}>
           <Input
-            placeholder="Nhập gmail của bạn"
+            type="text"
             value={username}
-            onChange={handleUsernameChange}
-            autoComplete="off"
+            onChange={(e) => setUsername(e.target.value)}
+            placeholder="Họ và tên"
           />
         </Form.Item>
-
-        <Form.Item
-          name="passwordRegister"
-          rules={[
-            {
-              required: true,
-              message: "Bạn chưa nhập mật khẩu!",
-            },
-          ]}
-          hasFeedback
-        >
-          <Input.Password
-            placeholder="Nhập mật khẩu của bạn"
+        <Form.Item rules={[{ required: true }]}>
+          <Input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            placeholder="Ngày sinh"
+          />
+        </Form.Item>
+        <Form.Item rules={[{ required: true }]}>
+          <Input
+            type="text"
+            value={sex}
+            onChange={(e) => setSex(e.target.value)}
+            placeholder="Giới tính"
+          />
+        </Form.Item>
+        <Form.Item rules={[{ required: true }]}>
+          <Input
+            type="gmail"
+            value={gmail}
+            onChange={(e) => setGmail(e.target.value)}
+            placeholder="Gmail"
+          />
+        </Form.Item>
+        <Form.Item rules={[{ required: true }]}>
+          <Input
+            type="text"
+            value={numberphone}
+            onChange={(e) => setNumberphone(e.target.value)}
+            placeholder="Số điện thoại"
+          />
+        </Form.Item>
+        <Form.Item rules={[{ required: true }]}>
+          <Input
+            type="text"
+            value={account}
+            onChange={(e) => setAccount(e.target.value)}
+            placeholder="Tài khoản"
+          />
+        </Form.Item>
+        <Form.Item rules={[{ required: true }]}>
+          <Input
+            type="password"
             value={password}
-            onChange={handlePasswordChange}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Mật khẩu"
           />
         </Form.Item>
-
         <Form.Item>
-          <Button type="primary" htmlType="submit" onClick={handleSignUp}>
-            Đăng ký
+          <Button type="primary" htmlType="submit">
+            Submit
           </Button>
         </Form.Item>
       </Form>

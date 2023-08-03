@@ -8,7 +8,14 @@ export const AdminApi = createApi({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (payload) =>({ 
-      url:'/api/Account/forgot',
+      url:'/api/Account/login',
+      body: payload,
+      method: 'POST',
+      })
+    }),
+    register: builder.mutation({
+      query: (payload) =>({ 
+      url:'/api/Account/dangki',
       body: payload,
       method: 'POST',
       })
@@ -17,5 +24,5 @@ export const AdminApi = createApi({
 });
 
 // Export các action và reducer của slice
-export const {useLoginMutation} = AdminApi;
+export const {useLoginMutation , useRegisterMutation} = AdminApi;
 

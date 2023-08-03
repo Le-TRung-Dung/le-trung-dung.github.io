@@ -28,7 +28,6 @@ function ProductDetail() {
   const{data:productBestseller}= useGetProductQuery({
   });
   const product = productBestseller?.find((e) => e.maSanPham == maSanpham);
-  console.log(product)
 
 
   // const filteredProducts = products.filter(
@@ -110,7 +109,7 @@ function ProductDetail() {
               </div>
             </div>
           </div>
-          {/* <SuggestProduct /> */}
+          <SuggestProduct />
         </div>
       </div>
     </>

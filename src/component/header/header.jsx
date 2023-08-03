@@ -12,12 +12,14 @@ import  { login }from "../../redux/accounSlice";
 import { useSelector, useDispatch } from 'react-redux'
 import { selectCount } from '../../redux/counterproductslice';
 import { useTranslation ,  withTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
   const { Option } = Select;
   const { t, i18n } = useTranslation();
-  const isLoggin = useSelector((state)=>state.accounSlice.isLoggin);
+  const [isLoggedIn, setLoggedIn] = useState(false);
   const count = useSelector(selectCount);
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const [searchTerm, setSearchTerm] = useState('');
   const[searchProduct, result]= useSearchProductMutation(
@@ -26,12 +28,21 @@ function Header() {
     }
   );
 
+  useEffect(() => {
+    // Kiểm tra xem có tồn tại authToken trong localStorage hay không
+    const storedAuthToken = localStorage.getItem('authToken');
+    if (storedAuthToken=== undefined) {
+      setLoggedIn(false); // Hiển thị logo nếu authToken có tồn tại
+    } else {
+      setLoggedIn(true); // Ẩn logo nếu authToken không tồn tại
+    }
+  }, [])
 
   const items = Menu['items'] = [
     {
       key: '1',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="/apple">
+        <a rel="noopener noreferrer" href="/apple">
           Apple
         </a>
       ),
@@ -39,7 +50,7 @@ function Header() {
     {
       key: '2',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="/samsung">
+        <a rel="noopener noreferrer" href="/samsung">
           Samsung
         </a>
       ),
@@ -47,7 +58,7 @@ function Header() {
     {
       key: '3',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="oppo">
+        <a rel="noopener noreferrer" href="oppo">
           Oppo
         </a>
       ),
@@ -55,7 +66,7 @@ function Header() {
     {
       key: '4',
       label: (
-        <a target="_blank" rel="noopener noreferrer" href="xiaomi">
+        <a rel="noopener noreferrer" href="xiaomi">
           Xiaomi
         </a>
       ),
@@ -63,23 +74,26 @@ function Header() {
   ];
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
-    console.log(searchTerm)
   };
   
   const handleChangeLanguage = (value) => {
     i18n.changeLanguage(value);
   };
 
-  const handleSearch = () => {
+  const handleSearch = (event) => {
+    event.preventDefault();
     searchProduct({
         "pageIndex": 1,
         "pageSize": 10,
         "productName": searchTerm
     })
+    navigate('/search')
+    setSearchTerm("")
   };
 
   const handleLogout = () => {
-    dispatch(login(false))
+    setLoggedIn(false)
+    navigate("/account")
   };
 
 
@@ -130,7 +144,7 @@ function Header() {
                 value={searchTerm}
                 className="myinput"
                />
-              <Button type="submit" onClick={handleSearch} className="searchbutton"><BsSearch /></Button>
+              <button type="submit" onClick={handleSearch} className="searchbutton"><BsSearch /></button>
             </form>
             </div>
             <div className="giohang-header-chonie">
@@ -145,7 +159,7 @@ function Header() {
             </div>
             <div className="taikhoan-header-chonie">
               <div className="giohang-header-chonie-item user">
-                {isLoggin ? (
+                {isLoggedIn ? (
                   <button className='buttonlogin' onClick={handleLogout}>Đăng xuất</button>
                   ) : (
                     <Link to="/account">

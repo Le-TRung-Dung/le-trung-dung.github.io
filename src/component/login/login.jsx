@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../redux/accounSlice";
 import { useTranslation, withTranslation } from "react-i18next";
+import { useLoginMutation } from "../../APIslice/apiAdminSlice";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -13,24 +14,27 @@ const Login = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
+  const[login,infomation]= useLoginMutation(
+    {
+      fixedCacheKey: 'share-product-search',
+    }
+  );
 
   const handleLogin = () => {
-    // Lấy danh sách tài khoản từ LocalStorage
-    const accounts = JSON.parse(localStorage.getItem("account")) || [];
-    // Kiểm tra xem tài khoản và mật khẩu có khớp hay không
-    const matchedAccount = accounts['email'] === username && accounts['password'] === password
-    console.log(matchedAccount)
-    if (matchedAccount) {
-      alert("Đăng nhập thành công!");
-      navigate('/')
-      dispatch(login(true))
-    } else {
-      alert("Tài khoản hoặc mật khẩu không chính xác!");
+    login({
+      "userName": username,
+      "passWord": password
+    })
+    const authToken = infomation?.data?.maNguoiDung
+    localStorage.setItem('authToken', authToken);
+    if(infomation?.status == "fulfilled"){
+      console.log("dang nhap thanh cong")
     }
-    // Xóa thông tin đăng nhập sau khi xử lý
-    setUsername("");
-    setPassword("");
-  };
+    else{
+      console.log("dang nhap ko thanh cong")
+    }
+    // navigate("/")
+  }
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
   };
@@ -82,6 +86,11 @@ const Login = () => {
           </Button>
         </Form.Item>
       </Form>
+      {/* <form>
+        <input value={username} onChange={handlePasswordChange} />
+        <input value={password} onChange={handlePasswordChange} />
+        <button type="submit" onClick={handleLogin}></button>
+      </form> */}
       <div className="login-text">
         <p>
           <Link to="/">{t("Return")}</Link>

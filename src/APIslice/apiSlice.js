@@ -5,16 +5,22 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const productApi = createApi({
   reducerPath: 'productApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://localhost:44358' }),
+  tagTypes: ['Post', 'User'],
   endpoints: (builder) => ({
     getProduct: builder.query({
-      query: () => '/api/Home/GetProductBanchay?sl=30',
+      query: () => '/api/Home/GetProductBanchay?sl=32',
     }),
     searchProduct: builder.mutation({
       query: (payload) =>({ 
       url:'/api/Home/SearchSp',
       body: payload,
       method: 'POST',
-      })
+      providesTags: (result, error, arg) =>
+        result
+          ? [...result.map(({ id }) => ({ type: 'Post', id })), 'Post']
+          : ['Post'],
+      }),
+
     }),
     creatDonHang: builder.mutation({
       query: (payload) =>({ 

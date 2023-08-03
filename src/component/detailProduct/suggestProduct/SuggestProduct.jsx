@@ -46,11 +46,14 @@ const SuggestProduct = () => {
     autoplay: true,
     autoplaySpeed: 1500
   };
+  
+  const Sametype = product?.find((e) => e.maSanPham == maSanpham);
 
-  const filteredProducts = product.filter(
-    (item) => item.heDieuHanh === product.heDieuHanh && item.maSanPham !== maSanpham
+  const filteredProducts = product?.filter(
+    (item) => item.maLoai === Sametype.maLoai
   );
-  console.log(filteredProducts);
+
+  const img="https://localhost:44335/";
 
   const handleCount = () => {
     if (count > 0) dispatch(decrement());
@@ -86,13 +89,13 @@ const SuggestProduct = () => {
         <h2>{t("Related Products")}</h2>
       </div>
       <Slider {...settings}>
-        {filteredProducts.map((product) => (
+        {filteredProducts?.map((product) => (
           <div className="dmspbanchay">
             <div className="dmspbanchay-list">
-              <div className="dmspbanchay-item" key={product.id}>
+              <div className="dmspbanchay-item" key={product?.maSanPham}>
                 <div className="dmspbanchay-item-img">
-                  <Link to={`/detailproduct/${product.id}`}>
-                    <img src={product.image} />
+                  <Link to={`/detailproduct/${product?.maSanPham}`}>
+                    <img src={img + product?.anh} />
                   </Link>
                 </div>
                 <div className="dmspbanchay-item-title">
@@ -101,13 +104,13 @@ const SuggestProduct = () => {
                     ellipsis={ellipsis ? true : false}
                   >
                     <Link to={`/detailproduct/${product.id}`}>
-                      <div>{product.name}</div>
+                      <div>{product?.tenSanPham}</div>
                     </Link>
                   </Text>
                 </div>
                 <div className="dmspbanchay-item-prince">
                   <div className="dmspbanchay-item-prince-gia">
-                    {product.price}
+                    {product?.gia}
                   </div>
                   <div
                     onClick={() => handleAddToCart(product)}
@@ -136,13 +139,12 @@ const SuggestProduct = () => {
                 <div className="ajaxcart_iner">
                   <div className="grid_item_img">
                     <Link to>
-                      <img src={item.image} />
+                      <img src={img + item.anh} />
                     </Link>
                   </div>
                   <div className="grid_item_name">
                     <div>
-                      <Link>{item.name}</Link>
-                      <p>{item.size}</p>
+                      <Link>{item.tenSanPham}</Link>
                     </div>
                     <div style={{ display: "flex" }}>
                       <div>

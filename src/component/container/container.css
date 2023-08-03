@@ -12,14 +12,15 @@
     width: auto;
 }
 .sanphambanchay h3{
+    margin-top: 30px;
     letter-spacing: 2px;
-    font-family: 'mtd';
-    font-size: 30px;
-    color: #EE9F1F;
-    text-transform: capitalize;
+    font-size: 25px;
+    color: #be1e2d;
+    text-transform: uppercase;
     text-align: center;
     margin-left: 5px;
     margin-right: 5px;
+    margin-bottom: 20px;
 }
 .sanphambanchay span{
 	position: relative;
@@ -28,6 +29,8 @@
 	margin-top: 45px;
 	text-decoration: column;
 	width: 100%;
+    background-color: white;
+    border-radius: 8px;
 }
 .dmspbanchay-list{
 	margin-top: 20px;

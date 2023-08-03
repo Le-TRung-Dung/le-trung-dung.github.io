@@ -48,8 +48,6 @@ const Pay = () => {
   const soluong = itemtotal.map(e => e.quantity);
   const gia = itemtotal.map(e => e.gia);
 
-  console.log(name)
-
   const cartTotal = useSelector((state) => state.cartSlice.total);
 
   const handleNameChange = (e) => {
